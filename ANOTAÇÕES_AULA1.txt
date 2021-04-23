@@ -1,0 +1,116 @@
+!!!Pesquisar no documento pela palavra 'pesquisar' para saber o que estudar direito!!!
+
+COMANDO PARA SE INICIAR UMA APLICAÇÃO DE BACKEND:
+mix phx.new inmana --no-html --no-webpack
+mix = cli do elixir (?)
+phx.new = criar um novo projeto do phoenix
+inmana = nome do projeto
+--no-html = não gerar arquivos HTML, provavelmente pra dizer que é só backend
+--no-webpack = para não ter o webpack, não sei por que não ter aqui
+
+O Phoenix é um framework frontend do elixir, serve tanto para frontend quanto para backend,
+ou os dois juntos, o que eu descobri que tem o nome de monolito. Mas o interessante é pesquisar
+melhor as possibilidades do phoenix caso eles não passam por isso. Pelo que entendi ele é o meu
+angular e ao mesmo tempo o node.js.
+
+Elixir é uma linguagem compilada, é feito em cima do erlang. Nos anos 80 rodava 80% do código da
+internet. Era bom pra epoca, tudo na epoca usava ele, roteadores, ela bem escalada.
+Elixir é compilada pra erlang. O Elixir herda e trás essa roupagem moderna, que seja tolerante a falhas
+e com servidores que aguentam porrada.
+
+VM BEAM, que é a VM que roda o erlang, especializada pra ela.
+
+mix ecto.create = comando para criar o banco de dados do Postgre
+Ecto é uma lib que vem default com o phoenix e lida com o banco de dados pra nós. Pesquisar melhor o
+que é esse ecto para entender como funciona
+
+mix phx.server abre o servidor
+com o server rodando é só ir em localhost:4000 e vai ter um página rodando, porém de erro. O phoenix
+da um dashboard que está na rota /dashboard com algumas informações do servidor. Basta ir pra la.
+
+mix.exs é o arquivo de configuração do elixir e/ou da aplicação com phoenix. Ele serve mais ou menos
+como um package.json, porém com configurações a mais.
+Tanto que tenho o deps de dependencias
+
+Precisa configurar o credo nas dependencias, é só entrar no github e copiar a linha do usage.
+O credo é um linter, basicamente a configuração coloca a versão e ambiente que ele pode rodar;]
+
+mix test = roda testes
+mix compile = compila a aplicação pro ambiente de testes
+mix credo.gen.config = cria o arquivo de configuração do credo para o linter dele
+mix format = formata o código pra nós
+
+config do credo é só procurar por !!anotação!! para saber o que eu alterei, o que foi pedido
+
+Não preciso ligar o format on save, pois uso o alt+shift+F para formatar tudo de uma vez, precisa disso
+não.
+
+pasta de lib é onde está o código propriamente dito. Ele é um MVC, então no inmana_web é a parte da
+view e na pasta só com o nome da aplicação é a lógica de negócios e futuramente os models do banco
+
+extensão ex = arquivo do elixir
+extensão .exs = script do elixir
+
+comando iex é um elixir interativo, é como se fosse o console do chrome.
+
+map no elixir é praticamente um objeto, chave/valor, dicionário, o que for. PRa se criar um map eu uso
+%{} com as chaves e valores dentro. Existem dois tipos de criar chaves e, acho que, em ambos os casos
+o nome das chaves é chamado de atoms, isso preciso entender.
+primeira forma: map = %{a: 1, b: 2}; posso acessar com map[:a] ou map.a;
+segunda forma: map = %{"a" => 1, "b" => 2}; posso acessar com map["a"];
+A segunda forma me parece ser boa pra quando o mapa vai ser criado a partir de outro mapa ou valores
+que o usuario passou por parametro de alguma forma; A primeira me parece algo mais controlado dentro
+do código mesmo, sem muita interação de fora.
+
+Ta, calma; Tem meio que "construtores" de um "tipo", não sei se é chamado de tipo, ele chama de modulo,
+então o mobulo Map tem funções dentro, como o .get; Essa função não existe na variavel map como criada
+acima, ela existe APENAS no modulo, pois não é um construtor; Então se eu quiser usar o modulo de Map
+para dar um get em um map criado com %{} eu posso passar Map.get(map, :a)
+
+A diferença entre usar a função .get do modulo Map, é que se eu acesso uma chave em um map %{} que
+não existe, ele retorna nil (que é nulo); Já com a função, no terceiro parametro posso passar um
+default caso ele não tenha um valor.
+
+comando iex -S mix meio que cria um servidor na linha de comando onde posso chamar os modulos e
+funções para testar;
+
+Todo modulo tem varias funções e tem modulo para todos os tipos; Cada função no autocomplete vai ter
+um / e um numero na frente, isso significa quantos argumentos essa função espera receber. Esse numero
+de argumentos é chamado de ariedade (? ou aredade)
+
+Se digitar na linha de comando do iex "h String.upcase" ele mostra uma documentação dessa função do
+modulo. Serve para qualquer modulo.função;
+
+No Elixir e paradigma funcional os dados são imutaveis, se eu passo uma variavel para uma função que
+altera o valor, esse valor não é alterado em memoria, mas ele devolve o resultado; ele da uma explicação
+legal sobre isso a partir dos 50min do vídeo; sobre memoria, threads; mutação; garbage collector; etc.
+
+O pipe do Elixir é feito com |> (pipe e sinal de maior)
+
+PERA O SINAL DE ATRIBUIÇÃO NÃO É ATRIBUIÇÃO, É MATCH;
+ele funciona meio que igual uma desestruturação do javascript; mas é o nome de match, ele meio que compara
+o valor da esquerda com o da direita, e pra dar match ele atribui o da direta pra esquerda pra que eles
+sejam iguais. Acho que isso.
+!!! Pesquisar !!! Pattern Match
+
+uma tupla {} é basicamente uma lista que podem ter varios valores; No caso do retorno dos evaluates
+eu coloco que o primeiro valor da tupla, o :ok ou :error é o status do retorno, já o segundo valor
+é realmente o valor de retorno
+
+NOSSA MAS A PARTE WEB ELE PASSOU IGUAL UM FOGUETE
+Tentar parar e entender depois melhor o que ele fez com a parte das rotas e controllers, já que é MVC 
+
+TA, SOBRE A TUPLA EU TO TENDO UM POUQUINHO DE TRABALHO PRA ENTENDER MAIS OU MENOS COMO FUNCIONA POR UMA
+BESTEIRA QUE EU ACHO QUE SEI POR QUE É ASSIM, MAS PRECISO TESTAR MELHOR.
+POR EXEMPLO NA FUNÇÃO handle_response({:ok, message}, conn) QUE EU RECEBO ESSA TUPLA POR ARGUMENTO.
+AQUI QUE RECEBO ELA POR PATTERN MATCH NÉ, BELEZA, ELE VAI VER QUE O QUE ESTOU ENVIANDO É IGUAL AO QUE 
+ESTA ESPERANDO NO ARGUMENTO E VAI ATRIBUIR, MAS A TUPLA EM SI NÃO FAZ PARTE DE UMA VARIAVEL, ELA NÃO
+ESTÁ ATRIBUIDA E AINDA ASSIM CONSIGO ACESSAR O :ok E message DENTRO DA FUNÇÃO NUMA BOA.
+
+PELO QUE ENTENDI É COMO SE FOSSE DESESTRUTURAÇÃO DE UM OBJETO EM JAVASCRIPT. BASICAMENTE EU TO PASSANDO
+A TUPLA COM ESSES DOIS VALORES DENTRO E AO RECEBER NA FUNÇÃO EU DESESTRUTURO A TUPLA E E JOGO O :ok NA
+VARIAVEL :ok, E TAMBÉM O message NA VARIAVEL MESSAGE.
+
+É ISSO, É TIPO UMA DESESTRUTURAÇÃO? SE EU TIVESSE NOMES DIFERENTES DE VARIAVEIS FUNCIONARIA? OS VALORES
+ASSUMIRIAM AS POSIÇÕES CORRETAS? PQ TEVE UMA PARTE DA AULA QU ELE MOSTRA QUE SIM, AQUILO DE A,B,C=1,2,3
+ENTÃO SEI LA AMANHÃ TESTAR ISSO!!!

@@ -1,0 +1,98 @@
+migration é uma script que vai manipular nosso modelo de dados no BD. É comum o uso de migrations
+pra manter tracking das alterações do BD, mas também pra reverter de forma fácil e correta.
+
+mix ecto.gen.migration create_restaurants_table = código para gerar uma migration
+
+criando uma tabela no arquivo gerado pelo comando acima:
+create table(:nome_tabela) do = vai criar uma tabela com o nome passado na função
+
+criando uma coluna na tabela:
+add :nome_coluna, :tipo = adiciona uma coluna com o nome passado e o tipo, separados por virgula
+
+criando indexação unica para que campos não possam ser repetidos
+create unique_index(:nome_tabela, [:campo]) = cria um index unico nos campos dentro da lista
+na tabela X. Isso aqui ele faz fora do create table, seria isso mesmo?
+
+se você não define o id ele vai ser numero de zero em diante, é preciso definir uuid
+
+configuração para o BD utilizar UUID ao invés de numeros:
+config :inmana, Inmana.Repo
+  migration_primary_key: [type: :binary_id],
+  migration_foreign_key: [type: :binary_id]
+
+Isso é inserido no config.exs. Ele explica por que o uso do modulo Repo, pois é o Repo que faz
+toda a comunicação com o banco, então colocando essa configuração nele faz com que todas as
+tabelas tenham essa configuração.
+No caso o que ess aconfiguração faz é dizer que toda primary e foreign keys criadas por migrations
+devem utilizar para a chave o tipo binary_id (UUID).
+
+mix ecto.migrate = executa migrations
+import = serve para importar funções e macros de outros modulos
+use = significa que sou usar o modulo no contexto atual, ou seja dentro do meu modulo. Seria tipo injeção
+de dependencia do angular?
+
+Rodar o iex com iex -S mix
+
+uma struct é um map com um nome, é como se eu criasse um map a partir de um modulo ou estrutura passado
+pra ele na hora da criação. Por exemplo:
+um map normal seria %{a: 1, b: 2}; isso atribuido a uma variavel me daria, por exemplo, mapa[:a] e eu
+pego o valor;
+Uma struct é gerada assim: %Inmana.Restaurant{}
+Com isso eu crio um mapa a partir da estrutura, e o mapa em questão vai ter a aparencia e campos
+existentes nessa estrutura; Porém tentei acessar um campo e não deu certo, fiz que a função não implementa
+o metodo get ou fetch.
+
+A linha de comando dele é diferente, mostra mais coisas, não da pra eu brincar como ele brinca se pa;
+
+o código:
+Inmana.Restaurant.changeset(%{name: "Siri cascudo", email: "siri@fenda.com"}) |> Inmana.Repo.insert()
+funcionou. Porém eu posso criar aliases pra não ficar precisando usar o Inmana no começo de todo comando
+só usando alias Inmana.Modulo... com isso eu consigo usar Modulo.Funcao() numa boa;
+!!!ATENÇÃO!!! sempre lembrar que no pipe o valor retornado pela primeira função SEMPRE é passado como
+primeiro argumento para a próxima função, por isso não é preciso, por exemplo, no Repo.Insert() passar
+algo como argumento.
+
+O retorno desse insert é:
+[debug] QUERY OK db=16.0ms idle=500.0ms
+INSERT INTO "restaurants" ("email","name","inserted_at","updated_at","id") VALUES ($1,$2,$3,$4,$5)
+["siri@fenda.com", "Siri cascudo", ~N[2021-04-23 20:10:55],
+~N[2021-04-23 20:10:55], <<77, 3, 184, 144, 137, 82, 68, 244, 172, 161, 21, 245, 
+250, 92, 253, 139>>]
+{:ok,
+ %Inmana.Restaurant{
+   __meta__: #Ecto.Schema.Metadata<:loaded, "restaurants">,
+   email: "siri@fenda.com",
+   id: "4d03b890-8952-44f4-aca1-15f5fa5cfd8b",
+   inserted_at: ~N[2021-04-23 20:10:55],
+   name: "Siri cascudo",
+   updated_at: ~N[2021-04-23 20:10:55]
+ }}
+
+https://hexdocs.pm/ecto/Ecto.Changeset.html documentação do changeset, em functions tem todas as funções
+disponiveis.
+
+dentro de inmana ele criou um restaurants, uma past, e dentro criou um arquiv create.ex, que indica a
+ação que será feita no banco. Então, pelo jeito, tudo dentro dessa pasta de restaurants vai servir pra
+ter acesso ao banco.
+
+CARALHO POSSO DOCUMENTAR DE FORMA FÁCIL usando o @moduledoc """ texto """ para criar uma documentação do
+modulo e @doc """ texto """ para documentar a função
+
+isso é meio basico para se ter agora, mas a atribuição pode ser feita dos dois lados, posso atribuir pro
+lado direito também, mas acho que depende de algumas condições. Tipo o retorno de uma função recebida
+como parametro em outra; Esse retorno, se o pattern match da certo, posso atribuir em uma variavel do
+lado direito do pattern match
+
+O alias sempre pega o ultimo nome do modulo, ex: alias Inmana.Restaurants.Create vai retornar um alias de
+Create, podendo então chamar Create.call()
+
+with é uma forma de fazer um pattern match também, e podendo ter mais de um pattern match pra ele verificar
+O with pode ter um else com mais casos e respostas, o else vai ser tipo um switch.
+
+O with também é muito utilizado para retornar um erro pra quem chamou ele.
+Um exemplo de with utilizando o padrão dos restaurants create:
+
+with {:ok, %Restaurant{} = restaurant} <- Inmana.Restaurants.Create.call(params) do
+Aqui o que eu falo é, se o call foi chamado com esses dados passados na frente do with, devo executar o
+código do bloco... poderia ter uma , na frente do call e passar uma outra função dizendo tipo "se chamou
+o call ou outra função com esse parametro, então executo o bloco de código"

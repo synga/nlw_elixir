@@ -1,0 +1,4 @@
+{
+  "elixir.credo.ignoreWarningMessages": true,
+  "elixir.credo.strictMode": true
+}
