@@ -7,6 +7,8 @@ defmodule Inmana.Restaurant do
   use Ecto.Schema
   # O import serve para importar funções e macros de outros modulos
   import Ecto.Changeset
+  # Aias do supply
+  alias Inmana.Supply
 
   # O @nome e "valor" é uma variavel de modulo, uma constante que serve só aqui dentro
   # aqui são definidas as configurações da chave primaria; então a primary_key do meu schema é
@@ -24,6 +26,9 @@ defmodule Inmana.Restaurant do
   schema "restaurants" do
     field :email, :string
     field :name, :string
+
+    # Aqui digo que um restaurante tem muitos suprimentos, passo o nome da tabela e o modulo referente
+    has_many :supplies, Supply
 
     timestamps()
   end
