@@ -20,8 +20,6 @@ defmodule InmanaWeb.ErrorView do
     %{message: translate_errors(changeset)}
   end
 
-  # Traduz as mensagens do changeset pra mensagens mais legiveis utilizando o traverse_errors do
-  # Próprio Changeset que pego via alias ali acima
   defp translate_errors(changeset) do
     Changeset.traverse_errors(changeset, fn {msg, opts} ->
       Enum.reduce(opts, msg, fn {key, value}, acc ->

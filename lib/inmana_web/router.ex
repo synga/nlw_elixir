@@ -2,20 +2,13 @@ defmodule InmanaWeb.Router do
   use InmanaWeb, :router
 
   pipeline :api do
-    # Pipeline de api Aceita apenas json
     plug :accepts, ["json"]
   end
 
-  # Basicamente endpoint /api, dentro crio meus gets de rota. Posso ter rotas com o resto do CRUD?
   scope "/api", InmanaWeb do
-    # Define que estamos utilizando o pipeline :api
     pipe_through :api
 
-    # Quando chamar /api, ativar o WelcomeController chamando a função index
     get "/", WelcomeController, :index
-
-    # Cria uma rota para /restaurants, que o controller é o RestaurantsController, e que ao chamar essa
-    # rota vai ativar o metodo create
     post "/restaurants", RestaurantsController, :create
   end
 

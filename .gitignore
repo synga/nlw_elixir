@@ -28,5 +28,4 @@ inmana-*.tar
 /priv/static/
 
 #ignore txt
-ANOTAÇÕES_AULA1.txt
-/*.txt
+*.txt
