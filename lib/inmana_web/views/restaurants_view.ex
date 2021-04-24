@@ -1,4 +1,5 @@
-defmodule Inmana.RestaurantsView do
+# Views tem que ser InmanaWeb, havia colocado apenas inmana
+defmodule InmanaWeb.RestaurantsView do
   use InmanaWeb, :view
 
   # crio uma metodo render que pelo pattern match vai saber que recebendo um create.json e um map com um

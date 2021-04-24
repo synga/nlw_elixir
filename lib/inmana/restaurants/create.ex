@@ -18,7 +18,8 @@ defmodule Inmana.Restaurants.Create do
   # E SÓ RETORNO ESSE RESULT
   # SE VEIO UM ERRO, PEGO O ERRO E O RESULTADO E RETORNO EM UMA TUPLA CONTENDO O ERRO, E UM MAP COM O
   # RESULT E O STATUS
-  defp handle_insert({:ok, %Restaurant{} = result}), do: result
+  # Aqui havia feito errado, o result tem que ser o atom de ok e o struct, não só o struct
+  defp handle_insert({:ok, %Restaurant{}} = result), do: result
 
   defp handle_insert({:error, result}), do: {:error, %{result: result, status: :bad_request}}
 end

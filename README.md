@@ -10,10 +10,16 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
-## Learn more
+## Sobre
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+A ideia é ser um manager que controla produtos de um restaurante e a data de expiração deles. Estou
+seguindo o NLW#5.
+
+## Os repositórios
+
+Comecei a subir os repositórios a partir da segunda aula, vou fazer uma branch para cada aula.
+
+Branchs com o sufixo *-comment* são branchs que tem comentários no código, que anoto para estudo. Para
+ver o código sem comentários basta utilizar as branchs sem esse sufixo.
+
+A *main* vai estar sempre com o código atualizado da ultima aula que fiz.
