@@ -4,11 +4,13 @@ defmodule Inmana.Supply do
   alias Inmana.Restaurant
 
   @primary_key {:id, :binary_id, autogenerate: true}
+
   # Definindo que o id do restaurante pai desse supply é um binary_id. Se não da erro pois ele vai
   # esperar um inteiro
   @foreign_key_type :binary_id
+
   @required_params [:description, :expiration_date, :responsible, :restaurant_id]
-  # passo pro encoder de retorno os params requeridos concatenando o id
+  # passo pro encoder de retorno os params requeridos concatenando o id para a lista
   @derive {Jason.Encoder, only: @required_params ++ [:id]}
 
   schema "supplies" do
@@ -22,6 +24,7 @@ defmodule Inmana.Supply do
     timestamps()
   end
 
+  # Explicação sobre o que é feito aqui está em restaurant.ex
   def changeset(params) do
     %__MODULE__{}
     |> cast(params, @required_params)

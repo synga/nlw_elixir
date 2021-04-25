@@ -46,4 +46,10 @@ defmodule InmanaWeb.Router do
       live_dashboard "/dashboard", metrics: InmanaWeb.Telemetry
     end
   end
+
+  # Uma rota para em ambiente de dev ver os emails que estão sendo enviados, depois de enviar basta
+  # dar um F5 na rota
+  if Mix.env() == :dev do
+    forward "/sent_emails", Bamboo.SentEmailViewerPlug
+  end
 end
