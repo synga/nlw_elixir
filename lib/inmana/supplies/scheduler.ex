@@ -21,7 +21,7 @@ defmodule Inmana.Supplies.Scheduler do
   end
 
   @impl true
-  def handle_info(msg, state) do
+  def handle_info(_msg, state) do
     ExpirationNotification.send()
 
     schedule_notification()
