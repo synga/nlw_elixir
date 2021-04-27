@@ -40,7 +40,7 @@ defmodule Inmana.Supplies.Scheduler do
   # notificação para depois de 10 segundos (ou 7 dias); Ao executar esse processo cai aqui no handle_info;
   # Vou chamar a função que envia os emails; Então faço o agendamento novamente; Devolvo uma resposta "vazia"
   @impl true
-  def handle_info(msg, state) do
+  def handle_info(_msg, state) do
     ExpirationNotification.send()
 
     schedule_notification()
