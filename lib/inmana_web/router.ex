@@ -10,15 +10,6 @@ defmodule InmanaWeb.Router do
 
     get "/", WelcomeController, :index
     post "/restaurants", RestaurantsController, :create
-
-    # Da pra criar rotas de um jeito fácil usando o resources, ele cria todas as rotas possiveis para
-    # um schema, e você pode passar só as que quer também ao invés de fazer o que está abaixo;
-    # post "/supplies", SuppliesController, :create
-    # get "/supplies/:id", SuppliesController, :show
-    # Ele cria as rotas com nomes pré-definidos, então minhas funções devem seguir esses nomes, é preciso
-
-    # Com esse resources, crio a rota de supplies referente ao SuppliesController e passo que só
-    # quero as rotas de create e de show
     resources "/supplies", SuppliesController, only: [:create, :show]
   end
 
